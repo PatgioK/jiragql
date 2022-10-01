@@ -1,21 +1,23 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/dist/client/router';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 
 const Board = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (session) {
-      // router.push('/login')
+  useEffect(() => {
+    if (!session) {
+      router.push('/login')
       // signOut();
-  //   }
-  // }, [session])
+    }
+  }, [session])
 
-  // console.log(session)
+  console.log(session)
   return (
-    <div>board</div>
+    <>
+      <div>board</div>
+    </>
   )
 }
 
