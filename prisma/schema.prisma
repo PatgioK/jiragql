@@ -65,7 +65,7 @@ model Project {
   title           String
   url             String
   description     String
-  category        String
+  category        String                 @default("Software")
   assigned_users  Assignees_On_Project[]       
   tasks           Task[]
 }
@@ -77,14 +77,13 @@ model Task {
   reporter      User                 @relation(fields: [reporterId], references: [id])
   reporterId    String
   priority      String
-  status        String
-  issue_type    String
+  status        String               @default("Backlog")
+  issue_type    String               @default("Task")
   assignees     Assignees_On_Tasks[]
   comments      Comment[]
   project       Project              @relation(fields: [projectId], references: [id])
   projectId     String
 }
-
 
 model Comment {
   id         String @id @default(cuid())
@@ -93,9 +92,10 @@ model Comment {
   task       Task   @relation(fields: [taskId], references: [id])
   taskId     Int
   comment    String
+
+  @@index([taskId])
+  @@index([userId])
 }
-
-
 
 model Assignees_On_Tasks {
   user   User   @relation(fields: [userId], references: [id])
