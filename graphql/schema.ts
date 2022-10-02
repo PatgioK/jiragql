@@ -40,7 +40,7 @@ export const  typeDefs = gql`
     # }
 
     type Query {
-        users: [User]!
-        projects_by_user_email(email: String!): [Project]
+        AllUsersQuery: [User]!
+        # projects_by_user_email(email: String!): [Project]
     }
 `;
