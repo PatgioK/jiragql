@@ -6,7 +6,7 @@ import { gql, useQuery } from '@apollo/client';
 
 const AllUsersQuery = gql`
   query {
-      user{
+      AllUsersQuery {
         id
         name
         email
@@ -16,7 +16,11 @@ const AllUsersQuery = gql`
 
 const Board = () => {
   const { data: session } = useSession();
-  const { data, loading, error } = useQuery(AllUsersQuery);
+  const { data, loading, error } = useQuery(AllUsersQuery, {
+    onCompleted: data => {
+        console.log(data)
+    }
+});
   const router = useRouter();
 
   useEffect(() => {
@@ -33,7 +37,7 @@ const Board = () => {
 
   return (
     <>
-      <div>{data?.user.email}</div>
+      <div>div</div>
     </>
   )
 }
