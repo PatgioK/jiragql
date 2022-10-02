@@ -26,6 +26,7 @@ export const  typeDefs = gql`
         description: String
         category: String
         assigned_users: [User] 
+        creator_email: User
         # tasks: [Task] @relation
 
     }
@@ -40,5 +41,6 @@ export const  typeDefs = gql`
 
     type Query {
         users: [User]!
+        projects_by_user_email(email: String!): [Project]
     }
 `;
