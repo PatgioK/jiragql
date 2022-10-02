@@ -1,9 +1,9 @@
-// import prisma from "../lib/prisma";
+import prisma from "../lib/prisma";
 
 // find directly from prisma client
 // export const resolvers = {
 //     Query: {
-//         users: async () => await prisma.user.findMany(),
+//         users: async () => await prisma.user.findMany()
 //     },
 // };
 

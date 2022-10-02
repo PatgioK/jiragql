@@ -58,6 +58,7 @@ model User {
   assigned_tasks      Assignees_On_Tasks[]
   comments            Comment[]
   assigned_projects   Assignees_On_Project[]
+  created_projects    Project[]
 }
 
 model Project {
@@ -68,6 +69,8 @@ model Project {
   category        String                 @default("Software")
   assigned_users  Assignees_On_Project[]       
   tasks           Task[]
+  creator         User @relation(fields: [creator_email], references: [email])
+  creator_email    String
 }
 
 model Task {
