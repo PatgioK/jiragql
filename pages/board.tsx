@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/dist/client/router';
 import { useSession, signOut } from 'next-auth/react';
 
@@ -14,15 +14,12 @@ const AllUsersQuery = gql`
   }
 `
 
+
+
 const Board = () => {
   const { data: session } = useSession();
-  const { data, loading, error } = useQuery(AllUsersQuery, {
-    onCompleted: data => {
-        console.log(data)
-    }
-});
-  const router = useRouter();
 
+  const router = useRouter();
   useEffect(() => {
     if (!session) {
       router.push('/login')
@@ -32,8 +29,15 @@ const Board = () => {
   // console.log(session)
 
 
-  if (loading) return <div> Loading... </div>
-  if (error) return <div> Oops something went wrong: {error.message}</div>
+
+  //   const { data, loading, error } = useQuery(AllUsersQuery, {
+  //     onCompleted: data => {
+  //         console.log(data)
+  //     }
+  // });
+  // if (loading) return <div> Loading... </div>
+  // if (error) return <div> Oops something went wrong: {error.message}</div>
+
 
   return (
     <>

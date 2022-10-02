@@ -4,7 +4,7 @@ import { gql } from "apollo-server-micro";
 // integrate nextjs, apollo, gql, prisma:
 // https://www.youtube.com/watch?v=RJpevpbC4YY&ab_channel=Prisma
 
-export const  typeDefs = gql`
+export const typeDefs = gql`
     type User {
         id: String
         name: String
@@ -26,7 +26,7 @@ export const  typeDefs = gql`
         description: String
         category: String
         assigned_users: [User] 
-        creator_email: User
+        creator_email: String
         # tasks: [Task] @relation
 
     }
@@ -40,7 +40,8 @@ export const  typeDefs = gql`
     # }
 
     type Query {
-        AllUsersQuery: [User]!
-        # projects_by_user_email(email: String!): [Project]
+        users: [User]!
+        projects_by_user_email(email: String!): [Project]
+
     }
 `;
