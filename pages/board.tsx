@@ -20,14 +20,14 @@ const AllUsersQuery = gql`
 const Board = () => {
   const { data: session } = useSession();
 
-  const router = useRouter();
-  useEffect(() => {
-    if (!session) {
-      router.push('/login')
-      // signOut();
-    }
-  }, [session])
-  // console.log(session)
+  // const router = useRouter();
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push('/login')
+  //     // signOut();
+  //   }
+  // }, [session])
+  // // console.log(session)
 
 
 

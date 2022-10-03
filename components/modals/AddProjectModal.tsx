@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
-import Form from '../form'
+import CreateProjectForm from '../CreateProjectForm'
 
 export default function AddProjectModal() {
   let [isOpen, setIsOpen] = useState(true)
@@ -50,27 +50,17 @@ export default function AddProjectModal() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900 justify-between"
-                  >
-                    Create Project
-                    <button> close</button>
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >Create Project
+                    
                   </Dialog.Title>
                   <div className="mt-2">
-                    <Form />
+                    <CreateProjectForm />           
                   </div>
 
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
-                  </div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

@@ -1,6 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
+// to stop clsoing modal when clicking outside, add static and null function to onClose
+// <Dialog static as="div" className="relative z-10" onClose={() => null}>
+
+
 export default function MyModal() {
   let [isOpen, setIsOpen] = useState(true)
 

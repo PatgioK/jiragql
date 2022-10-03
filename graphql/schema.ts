@@ -10,6 +10,8 @@ export const typeDefs = gql`
         name: String
         email: String
         # emailVerified: DateTime
+        username: String
+        password: String
         image: String
         # accounts: [Account]
         # sessions: [Session]
@@ -41,7 +43,29 @@ export const typeDefs = gql`
 
     type Query {
         users: [User]!
-        projects_by_user_email(email: String!): [Project]
+        user_projects(email: String!): [Project]
 
     }
+
+    type Mutation {
+        create_user(username: String!, password: String!): UserCreatedResponse
+        # create_project(title: String!, description: String, url: String, category: String!, creator_email: String!): ProjectCreatedResponse!
+    }
+
+
+
+    type UserCreatedResponse{
+        success: Boolean!
+        message: String
+        user: User
+    }
+
+
+    type ProjectCreatedResponse {
+    success: Boolean!
+    message: String
+    project: Project
+  }
+
+
 `;
