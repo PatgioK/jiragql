@@ -3,6 +3,7 @@ import { useRouter } from 'next/dist/client/router';
 import { useSession, signOut } from 'next-auth/react';
 
 import { gql, useQuery } from '@apollo/client';
+import AddProjectModal from '../components/modals/AddProjectModal';
 
 const AllUsersQuery = gql`
   query {
@@ -41,6 +42,7 @@ const Board = () => {
 
   return (
     <>
+    <AddProjectModal></AddProjectModal>
       <div>div</div>
     </>
   )
