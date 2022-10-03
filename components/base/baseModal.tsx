@@ -1,8 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
-import Form from '../form'
 
-export default function AddProjectModal() {
+export default function MyModal() {
   let [isOpen, setIsOpen] = useState(true)
 
   function closeModal() {
@@ -19,7 +18,7 @@ export default function AddProjectModal() {
         <button
           type="button"
           onClick={openModal}
-          className="rounded-md bg-amber-600 bg-opacity-100 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
           Open dialog
         </button>
@@ -50,16 +49,18 @@ export default function AddProjectModal() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900 justify-between"
+                    className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Create Project
-                    <button> close</button>
+                    Payment successful
                   </Dialog.Title>
                   <div className="mt-2">
-                    <Form />
+                    <p className="text-sm text-gray-500">
+                      Your payment has been successfully submitted. We’ve sent
+                      you an email with all of the details of your order.
+                    </p>
                   </div>
 
                   <div className="mt-4">
