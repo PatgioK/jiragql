@@ -63,15 +63,15 @@ model User {
 }
 
 model Project {
-  id             String                 @id @default(cuid())
+  id             String                 @id @unique @default(cuid())
   title          String
   url            String
   description    String
   category       String                 @default("Software")
   assigned_users Assignees_On_Project[]
   tasks          Task[]
-  creator        User                   @relation(fields: [creator_email], references: [email])
-  creator_email  String                 @default("patgiok@gmail.com")
+  creator        User                   @relation(fields: [creator_username], references: [username])
+  creator_username  String               
 }
 
 model Task {

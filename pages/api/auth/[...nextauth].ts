@@ -79,7 +79,7 @@ const options = {
       // Send properties to the client, like an access_token and user id from a provider.
       session.accessToken = token.accessToken
       session.user.id = token.id
-      session.user.username = user.username
+      // session.user.username = user.username
   
       return session
     }
