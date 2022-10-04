@@ -73,7 +73,9 @@ const options = {
       user && (token.user = user);
       return Promise.resolve(token)   // ...here
     },
-<<<<<<< HEAD
+
+
+    //current changes
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token and user id from a provider.
       session.accessToken = token.accessToken
@@ -81,13 +83,13 @@ const options = {
       // session.user.username = user.username
   
       return session
-=======
+
+    // incoming changes?
     session: async (session, user, sessionToken) => {
       //  "session" is current session object
       //  below we set "user" param of "session" to value received from "jwt" callback
       session.user = user.user;
       return Promise.resolve(session)
->>>>>>> alt-history
     }
   }
 };

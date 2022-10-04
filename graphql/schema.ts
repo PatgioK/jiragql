@@ -28,11 +28,7 @@ export const typeDefs = gql`
         description: String
         category: String!
         assigned_users: [User] 
-<<<<<<< HEAD
-        creator_username: String
-=======
         creator_username: String!
->>>>>>> alt-history
         # tasks: [Task] @relation
     }
 

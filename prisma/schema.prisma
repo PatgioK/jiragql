@@ -68,17 +68,10 @@ model Project {
   website            String?
   description    String?
   category       String                 @default("Software")
-<<<<<<< HEAD
-  assigned_users Assignees_On_Project[]
-  tasks          Task[]
-  creator        User                   @relation(fields: [creator_username], references: [username])
-  creator_username  String               
-=======
   // assigned_users Assignees_On_Project[]
   // tasks          Task[]
   creator        User                   @relation(fields: [creator_username], references: [username])
   creator_username  String             
->>>>>>> alt-history
 }
 
 // model Task {
