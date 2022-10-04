@@ -6,15 +6,21 @@ import { gql, useQuery } from '@apollo/client';
 import AddProjectModal from '../components/modals/AddProjectModal';
 
 const AllUsersQuery = gql`
-  query {
-      AllUsersQuery {
+  query getusers{
+      users {
         id
         name
-        email
+        username
       }
   }
 `
-
+const UserProjects = gql`
+  query getProjects($username: String!){
+    user_projects(username: $username) {
+      username
+    }
+  }
+`
 
 
 const Board = () => {
@@ -30,20 +36,46 @@ const Board = () => {
   // // console.log(session)
 
 
-
-  //   const { data, loading, error } = useQuery(AllUsersQuery, {
-  //     onCompleted: data => {
-  //         console.log(data)
-  //     }
+  // const { data, loading, error } = useQuery(AllUsersQuery, {
+  //   onCompleted: data => {
+  //     console.log(data)
+  //   }
   // });
+
+  const { data: usersData, loading: usersLoading, error: usersError } = useQuery(AllUsersQuery, {
+    onCompleted: usersData => {
+      console.log(usersData)
+    }
+  });
   // if (loading) return <div> Loading... </div>
   // if (error) return <div> Oops something went wrong: {error.message}</div>
+
+  const { data: projectData, loading: projectLoading, error: projectError } = useQuery(UserProjects,
+    {
+      variables: "tester1"
+    }
+    )
 
 
   return (
     <>
-    <AddProjectModal></AddProjectModal>
-      <div>div</div>
+      <AddProjectModal />
+      {/* {data.users.map((user) => {
+        return(
+          <div>{user.username}</div>
+        )
+      })} */}
+      {/* {usersData.users.map((user: any) => {
+        return (
+          <div key={user.id}>{user.username}</div>
+        )
+      })} */}
+
+      {/* {projectData.user_projects.map((proj) => {
+        return (
+          <div key={proj.id}>{proj.title}</div>
+        )
+      })} */}
     </>
   )
 }

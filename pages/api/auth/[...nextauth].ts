@@ -44,9 +44,9 @@ const options = {
           }
         })
 
-          // Any object returned will be saved in `user` property of the JWT
+        // Any object returned will be saved in `user` property of the JWT
         if (user) {
-          
+
           return user
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
@@ -63,25 +63,20 @@ const options = {
   session: {
     strategy: 'jwt',
   },
-
-   callbacks : {
-    async jwt({ token, user, account, profile }) {
-      // Persist the OAuth access_token and or the user id to the token right after signin
-      if (account) {
-        token.accessToken = account.access_token
-        // token.id = profile.id
-      }
-      if(user)
-        token.user = user
-      return token
+  callbacks: {
+    jwt: async (token, user, account, profile, isNewUser) => {
+      //  "user" parameter is the object received from "authorize"
+      //  "token" is being send below to "session" callback...
+      //  ...so we set "user" param of "token" to object from "authorize"...
+      //  ...and return it...
+      user && (token.user = user);
+      return Promise.resolve(token)   // ...here
     },
-    async session({ session, token, user }) {
-      // Send properties to the client, like an access_token and user id from a provider.
-      session.accessToken = token.accessToken
-      session.user.id = token.id
-      session.user.username = user.username
-  
-      return session
+    session: async (session, user, sessionToken) => {
+      //  "session" is current session object
+      //  below we set "user" param of "session" to value received from "jwt" callback
+      session.user = user.user;
+      return Promise.resolve(session)
     }
   }
 };
