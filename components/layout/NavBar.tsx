@@ -4,19 +4,19 @@ import LoginBtn from '../loginbtn';
 
 export const NavBar = () => {
     const { data: session } = useSession();
-    // console.log(session)
+    console.log(session)
 
-    // if(!session) {
-    //     return (
-    //         <button onClick={() => signIn()}>Sign In</button>
-    //     )
-    // }
+    if(!session) {
+        return (
+            <button onClick={() => signIn()}>Sign In</button>
+        )
+    }
     
   return (<>
-    {/* <div> signed in as {session.user!.email}</div>
+    <div> signed in as {session.user!.email}</div>
 
-    <button onClick={() => signOut()}>Sign Out</button> */}
-    <LoginBtn />
+    <button onClick={() => signOut()}>Sign Out</button>
+    {/* <LoginBtn /> */}
     </>
   )
 }

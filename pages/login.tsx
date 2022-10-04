@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 // import { Card, Button, Form } from 'react-bootstrap'
 import { signIn, signOut, useSession } from 'next-auth/react'
-// import { useRouter } from 'next/dist/client/router';
+import { useRouter } from 'next/dist/client/router';
 
 const Login = () => {
     const { data: session } = useSession();
@@ -20,9 +20,9 @@ const Login = () => {
     //     }
     // }, [session])
 
-    // const routeRegister = () => {
-    //     router.push('/register')
-    // }
+    const routeRegister = () => {
+        router.push('/register')
+    }
 
     return (
         <>

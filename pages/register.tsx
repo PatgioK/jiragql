@@ -33,12 +33,12 @@ const Register = () => {
     const registerCheck = (e) => {
         e.preventDefault()
         console.log('registercheck');
-        console.log({ username, pass1 })
+        console.log({ username, pass1, pass2 })
         if (pass1 == pass2) {
             create_user({
                 variables: {
-                    username: username,
-                    password: pass1
+                    username: String(username),
+                    password: String(pass1),
                 }
             })
         }
