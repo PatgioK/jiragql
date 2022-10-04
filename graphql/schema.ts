@@ -18,17 +18,17 @@ export const typeDefs = gql`
         # created_tasks: [Task]
         # assigned_tasks: [Task]
         # comments: [Comment]
-        assigned_projects: [Project]
+        created_projects: [Project]
     }
 
     type Project{
         id: String
-        title: String
+        title: String!
         url: String
         description: String
-        category: String
+        category: String!
         assigned_users: [User] 
-        creator_username: String
+        creator_username: String!
         # tasks: [Task] @relation
     }
 

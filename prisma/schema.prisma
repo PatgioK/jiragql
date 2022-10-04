@@ -55,66 +55,66 @@ model User {
   image             String?
   accounts          Account[]
   sessions          Session[]
-  created_tasks     Task[]
-  assigned_tasks    Assignees_On_Tasks[]
-  comments          Comment[]
-  assigned_projects Assignees_On_Project[]
+  // created_tasks     Task[]
+  // assigned_tasks    Assignees_On_Tasks[]
+  // comments          Comment[]
+  // assigned_projects Assignees_On_Project[]
   created_projects  Project[]
 }
 
 model Project {
   id             String                 @id @default(cuid())
   title          String
-  url            String
-  description    String
+  website            String?
+  description    String?
   category       String                 @default("Software")
-  assigned_users Assignees_On_Project[]
-  tasks          Task[]
+  // assigned_users Assignees_On_Project[]
+  // tasks          Task[]
   creator        User                   @relation(fields: [creator_username], references: [username])
   creator_username  String             
 }
 
-model Task {
-  id          Int                  @id @default(autoincrement())
-  title       String
-  description String?
-  reporter    User                 @relation(fields: [reporterId], references: [id])
-  reporterId  String
-  priority    String
-  status      String               @default("Backlog")
-  issue_type  String               @default("Task")
-  assignees   Assignees_On_Tasks[]
-  comments    Comment[]
-  project     Project              @relation(fields: [projectId], references: [id])
-  projectId   String
-}
+// model Task {
+//   id          Int                  @id @default(autoincrement())
+//   title       String
+//   description String?
+//   reporter    User                 @relation(fields: [reporterId], references: [id])
+//   reporterId  String
+//   priority    String
+//   status      String               @default("Backlog")
+//   issue_type  String               @default("Task")
+//   assignees   Assignees_On_Tasks[]
+//   comments    Comment[]
+//   project     Project              @relation(fields: [projectId], references: [id])
+//   projectId   String
+// }
 
-model Comment {
-  id      String @id @default(cuid())
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
-  task    Task   @relation(fields: [taskId], references: [id])
-  taskId  Int
-  comment String
+// model Comment {
+//   id      String @id @default(cuid())
+//   user    User   @relation(fields: [userId], references: [id])
+//   userId  String
+//   task    Task   @relation(fields: [taskId], references: [id])
+//   taskId  Int
+//   comment String
 
-  @@index([taskId])
-  @@index([userId])
-}
+//   @@index([taskId])
+//   @@index([userId])
+// }
 
-model Assignees_On_Tasks {
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-  task   Task   @relation(fields: [taskId], references: [id])
-  taskId Int
+// model Assignees_On_Tasks {
+//   user   User   @relation(fields: [userId], references: [id])
+//   userId String
+//   task   Task   @relation(fields: [taskId], references: [id])
+//   taskId Int
 
-  @@id([userId, taskId])
-}
+//   @@id([userId, taskId])
+// }
 
-model Assignees_On_Project {
-  user      User    @relation(fields: [userId], references: [id])
-  userId    String
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId String
+// model Assignees_On_Project {
+//   user      User    @relation(fields: [userId], references: [id])
+//   userId    String
+//   project   Project @relation(fields: [projectId], references: [id])
+//   projectId String
 
-  @@id([userId, projectId])
-}
+//   @@id([userId, projectId])
+// }

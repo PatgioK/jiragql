@@ -61,7 +61,8 @@ const options = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.SECRET,
   session: {
-    strategy: 'jwt',
+    // jwt: true
+    strategy: 'jwt'
   },
   callbacks: {
     jwt: async (token, user, account, profile, isNewUser) => {

@@ -76,6 +76,7 @@ const Board = () => {
           <div key={proj.id}>{proj.title}</div>
         )
       })} */}
+      
     </>
   )
 }
