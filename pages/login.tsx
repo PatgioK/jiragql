@@ -10,7 +10,7 @@ const Login = () => {
     var link;
     if (typeof window !== "undefined") {
         link = window.location.origin + "/register";
-        console.log(link)
+        // console.log(link)
     }
 
     // useEffect(() => {

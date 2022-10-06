@@ -46,18 +46,15 @@ export const typeDefs = gql`
     }
 
     type Mutation {
-        create_user(username: String!, password: String!): UserCreatedResponse
-<<<<<<< HEAD
+        create_user(username: String!, password: String!): User
         create_project(title: String!, description: String, url: String, category: String!, creator_username: String!): ProjectCreatedResponse
-=======
->>>>>>> alt-history
     }
 
-    type UserCreatedResponse{
-        success: Boolean!
-        message: String
-        user: User
-    }
+    # type UserCreatedResponse{
+    #     success: Boolean!
+    #     message: String
+    #     # user: User
+    # }
 
 
     type ProjectCreatedResponse {

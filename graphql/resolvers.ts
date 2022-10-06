@@ -20,18 +20,18 @@ export const resolvers = {
     Mutation: {
         create_user: async (_parent, args, ctx) => {
             const result = await ctx.prisma.user.create({ data: { username: args.username, password: args.password } })
-            if (!result)
-                return {
-                    success: false,
-                    message: "failed to create user"
-                }
-            if (result) {
-                return {
-                    success: true,
-                    message: 'user created: ' + result.username,
-                    user: result
-                }
-            }
+            // if (!result)
+            //     return {
+            //         success: false,
+            //         message: "failed to create user"
+            //     }
+            // if (result) {
+            //     return {
+            //         success: true,
+            //         message: 'user created: ' + result.username,
+            //         // user: result
+            //     }
+            // }
         },
 
         create_project: async (_parent, args, ctx) => {

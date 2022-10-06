@@ -81,15 +81,17 @@ const options = {
       session.accessToken = token.accessToken
       session.user.id = token.id
       // session.user.username = user.username
-  
-      return session
 
-    // incoming changes?
-    session: async (session, user, sessionToken) => {
-      //  "session" is current session object
-      //  below we set "user" param of "session" to value received from "jwt" callback
-      session.user = user.user;
-      return Promise.resolve(session)
+      return session
+    },
+
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      // if (url.startsWith("/")) return `${baseUrl}${url}`
+      return "/kanban"
+      // Allows callback URLs on the same origin
+      // else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
     }
   }
-};
+}

@@ -36,11 +36,11 @@ const Board = () => {
   // // console.log(session)
 
 
-  // const { data, loading, error } = useQuery(AllUsersQuery, {
-  //   onCompleted: data => {
-  //     console.log(data)
-  //   }
-  // });
+  const { data, loading, error } = useQuery(AllUsersQuery, {
+    onCompleted: data => {
+      console.log(data)
+    }
+  });
 
   const { data: usersData, loading: usersLoading, error: usersError } = useQuery(AllUsersQuery, {
     onCompleted: usersData => {
@@ -54,29 +54,26 @@ const Board = () => {
     {
       variables: "tester1"
     }
-    )
+  )
 
 
   return (
     <>
       <AddProjectModal />
-      {/* {data.users.map((user) => {
-        return(
-          <div>{user.username}</div>
-        )
-      })} */}
-      {/* {usersData.users.map((user: any) => {
-        return (
-          <div key={user.id}>{user.username}</div>
-        )
-      })} */}
+      {
+        usersData &&
+        usersData.users.map((user: any) => {
+          return (
+            <div key={user.id}>{user.username}</div>
+          )
+        })}
 
       {/* {projectData.user_projects.map((proj) => {
         return (
           <div key={proj.id}>{proj.title}</div>
         )
       })} */}
-      
+
     </>
   )
 }
