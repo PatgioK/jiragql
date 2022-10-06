@@ -38,15 +38,17 @@ const options = {
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = await prisma.user.findFirst({
+        const res = await prisma.user.findFirst({
           where: {
             username: credentials?.username, password: credentials?.password
           }
         })
 
         // Any object returned will be saved in `user` property of the JWT
-        if (user) {
-
+        if (res) {
+          const user = {
+            name: res.username
+          }
           return user
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
@@ -65,12 +67,17 @@ const options = {
     strategy: 'jwt'
   },
   callbacks: {
-    jwt: async (token, user, account, profile, isNewUser) => {
+    jwt: async ({token, user, account, profile, isNewUser}) => {
       //  "user" parameter is the object received from "authorize"
       //  "token" is being send below to "session" callback...
       //  ...so we set "user" param of "token" to object from "authorize"...
       //  ...and return it...
-      user && (token.user = user);
+
+      if (typeof user !== typeof undefined)
+      {
+          token.user = user;
+      }
+      return token;
       return Promise.resolve(token)   // ...here
     },
 
@@ -78,7 +85,7 @@ const options = {
     //current changes
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token and user id from a provider.
-      session.accessToken = token.accessToken
+      // session.accessToken = token.accessToken
       session.user.id = token.id
       // session.user.username = user.username
 

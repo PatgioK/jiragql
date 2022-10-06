@@ -6,7 +6,7 @@ const Kanban = () => {
   const { data: session } = useSession();
 
     useEffect(() => {
-        if (session) {
+        if (!session) {
           console.log(session)
             router.push('/login')
             // signOut();
