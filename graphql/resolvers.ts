@@ -13,7 +13,7 @@ import prisma from "../lib/prisma";
 export const resolvers = {
     Query: {
         users: async (_parent: any, __args: any, ctx: any) => await ctx.prisma.user.findMany(),
-        user_projects: async (_parent, args, ctx) => await ctx.prisma.project.findMany({ where: { creator_username: args.username }, })
+        user_projects: async (_parent, args, ctx) => await ctx.prisma.project.findMany({ where: { creator_username: args.creator_username }, })
     },
 
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/dist/client/router';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession, signOut, getSession } from 'next-auth/react';
 
 import { gql, useQuery } from '@apollo/client';
 import AddProjectModal from '../components/modals/AddProjectModal';
@@ -15,25 +15,16 @@ const AllUsersQuery = gql`
   }
 `
 const UserProjects = gql`
-  query getProjects($username: String!){
-    user_projects(username: $username) {
-      username
+  query getProjects($creator_username: String!){
+    user_projects(creator_username: $creator_username) {
+      title
+      creator_username
     }
   }
 `
 
 
-const Board = () => {
-  const { data: session } = useSession();
-
-  const router = useRouter();
-  useEffect(() => {
-    if (!session) {
-      router.push('/login')
-      // signOut();
-    }
-  }, [session])
-  // console.log(session)
+const Board = ({ session }) => {
 
 
   const { data, loading, error } = useQuery(AllUsersQuery, {
@@ -52,7 +43,9 @@ const Board = () => {
 
   const { data: projectData, loading: projectLoading, error: projectError } = useQuery(UserProjects,
     {
-      variables: "tester1"
+      variables: {
+        creator_username: session?.user?.name
+      }
     }
   )
 
@@ -68,14 +61,35 @@ const Board = () => {
           )
         })}
 
-      {/* {projectData.user_projects.map((proj) => {
+      {projectData && projectData.user_projects.map((proj) => {
         return (
           <div key={proj.id}>{proj.title}</div>
         )
-      })} */}
+      })}
 
     </>
   )
 }
 
 export default Board
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  console.log(session)
+
+  if(!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      session
+    }
+  }
+}

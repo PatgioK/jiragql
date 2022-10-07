@@ -59,13 +59,13 @@ export const typeDefs = gql`
 
     type Query {
         users: [User]!
-        user_projects(username: String!): [Project]
+        user_projects(creator_username: String!): [Project]
     }
 
     type Mutation {
         create_user(username: String!, password: String!): User
         create_project(title: String!, description: String, url: String, category: String!, creator_username: String!): Project
-        create_task(title: String!, description: String, reporterusername: String!, priority: String!, status: String!, issue_type: String!, projectId: String!)
+        create_task(title: String!, description: String, reporterusername: String!, priority: String!, status: String!, issue_type: String!, projectId: String!): Task
     }
 
     # type UserCreatedResponse{
