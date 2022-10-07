@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 // import { Card, Button, Form } from 'react-bootstrap'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/dist/client/router';
 
 const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
     const { data: session } = useSession();
     const router = useRouter();
 
@@ -24,6 +27,33 @@ const Login = () => {
         router.push('/register')
     }
 
+
+    const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUsername(e.currentTarget.value)
+    }
+
+    const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.currentTarget.value)
+    }
+
+    const handleLogin = async () => {
+        const res = await signIn('credentials',
+            {
+                username,
+                password,
+                callbackUrl: `${window.location.origin}/board`,
+                redirect: false,
+            }
+        )
+        if (res?.error) handleError(res.error)
+        if (res?.url) router.push(res.url);
+    }
+
+    const handleError = (errmsg: string) => {
+        // setErrorMsg(errmsg);    ///Only returns "CredentialsSignin"
+        setErrorMsg("Invalid Username or Password");
+    }
+
     return (
         <>
             <main
@@ -39,6 +69,8 @@ const Login = () => {
                             type="text"
                             placeholder="Email or Username"
                             className="w-full border-none bg-transparent outline-none placeholder-slate-400 placeholder:italic focus:outline-none"
+                            onChange={(e) => handleUsername(e)}
+                            value = {username}
                         />
                     </div>
 
@@ -49,18 +81,23 @@ const Login = () => {
                             type="password"
                             placeholder="Password"
                             className="w-full border-none bg-transparent outline-none placeholder-slate-400 placeholder:italic focus:outline-none"
+                            onChange={(e) => handlePassword(e)}
+                            value = {password}
                         />
                     </div>
 
+                    <div>{errorMsg}</div>
+
                     <button
                         className="transform rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-400"
+                        onClick={handleLogin}
                     >
                         LOG IN
                     </button>
 
 
                     <p className="text-center text-lg">
-                        No account?  
+                        No account?
                         <a onClick={routeRegister}
 
                             className="font-medium text-indigo-500 underline-offset-4 hover:underline"
