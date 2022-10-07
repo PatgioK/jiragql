@@ -77,7 +77,7 @@ export async function getServerSideProps({ req }: {req: any}) {
   const session = await getSession({ req });
 
   // console.log(session)
-  console.log(req)
+  // console.log(req)
 
   if(!session) {
     return {

@@ -50,8 +50,8 @@ const Login = () => {
     }
 
     const handleError = (errmsg: string) => {
-        // setErrorMsg(errmsg);    ///Only returns "CredentialsSignin"
-        setErrorMsg("Invalid Username or Password");
+        setErrorMsg(errmsg);    ///Only returns "CredentialsSignin"
+        // setErrorMsg("Invalid Username or Password");
     }
 
     return (
