@@ -13,12 +13,12 @@ import prisma from "../lib/prisma";
 export const resolvers = {
     Query: {
         users: async (_parent: any, __args: any, ctx: any) => await ctx.prisma.user.findMany(),
-        user_projects: async (_parent, args, ctx) => await ctx.prisma.project.findMany({ where: { creator_username: args.creator_username }, })
+        user_projects: async (_parent: any, args: any, ctx: any) => await ctx.prisma.project.findMany({ where: { creator_username: args.creator_username }, })
     },
 
 
     Mutation: {
-        create_user: async (_parent, args, ctx) => {
+        create_user: async (_parent: any, args: any, ctx: any) => {
             const result = await ctx.prisma.user.create({ data: { username: args.username, password: args.password } })
             // if (!result)
             //     return {
@@ -34,7 +34,7 @@ export const resolvers = {
             // }
         },
 
-        create_project: async (_parent, args, ctx) => {
+        create_project: async (_parent: any, args: any, ctx: any) => {
             const result = await ctx.prisma.project.create({ data: {
                 creator_username: args.creator_username,
                 title: args.title, 
@@ -43,7 +43,7 @@ export const resolvers = {
                 category: args.category, }})
         },
 
-        create_task: async (_parent, args, ctx ) => {
+        create_task: async (_parent: any, args: any, ctx: any ) => {
             const result = await ctx.prisma.task.create({ data: {
                 title: args.title,
                 description: args.description,

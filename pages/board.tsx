@@ -24,7 +24,7 @@ const UserProjects = gql`
 `
 
 
-const Board = ({ session }) => {
+const Board = ({ session}: {session: any}) => {
 
 
   const { data, loading, error } = useQuery(AllUsersQuery, {
@@ -61,7 +61,7 @@ const Board = ({ session }) => {
           )
         })}
 
-      {projectData && projectData.user_projects.map((proj) => {
+      {projectData && projectData.user_projects.map((proj: any) => {
         return (
           <div key={proj.id}>{proj.title}</div>
         )
@@ -73,10 +73,11 @@ const Board = ({ session }) => {
 
 export default Board
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req }: {req: any}) {
   const session = await getSession({ req });
 
-  console.log(session)
+  // console.log(session)
+  console.log(req)
 
   if(!session) {
     return {
