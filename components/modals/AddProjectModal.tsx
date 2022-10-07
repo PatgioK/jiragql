@@ -58,7 +58,7 @@ export default function AddProjectModal() {
                     
                   </Dialog.Title>
                   <div className="mt-2">
-                    <CreateProjectForm />           
+                    <CreateProjectForm closeModal={closeModal}/>           
                   </div>
 
                 </Dialog.Panel>

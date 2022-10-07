@@ -67,7 +67,7 @@ const options = {
     strategy: 'jwt'
   },
   callbacks: {
-    jwt: async ({token, user, account, profile, isNewUser}) => {
+    jwt: async ({token, user}) => {
       //  "user" parameter is the object received from "authorize"
       //  "token" is being send below to "session" callback...
       //  ...so we set "user" param of "token" to object from "authorize"...
@@ -86,7 +86,7 @@ const options = {
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token and user id from a provider.
       // session.accessToken = token.accessToken
-      session.user.id = token.id
+      // session.user.id = token.id
       // session.user.username = user.username
 
       return session
@@ -94,10 +94,9 @@ const options = {
 
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
-      // if (url.startsWith("/")) return `${baseUrl}${url}`
-      return "/kanban"
+      if (url.startsWith("/")) return `${baseUrl}${url}`
       // Allows callback URLs on the same origin
-      // else if (new URL(url).origin === baseUrl) return url
+      else if (new URL(url).origin === baseUrl) return url
       return baseUrl
     }
   }

@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react"
-import {gql, useMutation} from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
+import { useSession } from "next-auth/react";
 
 const CREATE_PROJECT_MUTATION = gql`
   mutation CreateProject($title: String!, $description: String, $website: String, $category: String! $creator_username: String!) {
@@ -13,19 +14,22 @@ const CREATE_PROJECT_MUTATION = gql`
   }
 `
 
-export default function CreateProjectForm() {
+interface ProjectFormProps {
+  closeModal: () => void,
+}
 
-  const [ username, setUsername ] = useState('')
-  const [ title, setTitle ] = useState('')
-  const [ Url, setUrl ] = useState('')
-  const [ desc, setDesc ] = useState('')
-  const [ category, setCategory ] = useState('Business')
+export default function CreateProjectForm(prop: ProjectFormProps) {
+
+  const { data: session } = useSession();
+  const [title, setTitle] = useState('')
+  const [Url, setUrl] = useState('')
+  const [desc, setDesc] = useState('')
+  const [category, setCategory] = useState('Business')
+  const [invalidTitle, setInvalidTitle] = useState(true)
 
 
-  let handleUsername = (e: ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.currentTarget.value)
-  }
   let handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    (e.currentTarget.value == '') ? setInvalidTitle(true) : setInvalidTitle(false);
     setTitle(e.currentTarget.value)
   }
   let handleUrl = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,25 +42,41 @@ export default function CreateProjectForm() {
     setCategory(e.currentTarget.value)
   }
 
+  let CloseForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    prop.closeModal();
 
-  const [create_project, { data, loading, error}] = useMutation(CREATE_PROJECT_MUTATION)
+  }
 
-  const handleCreateProject = ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault()
-
-    create_project({
-      variables: {
-        title: title,
-        description: desc,
-        url: Url,
-        category: category,
-        creator_username: username,
-      }
-    })
+  const [create_project, { data, loading: createProjectLoading, error }] = useMutation(CREATE_PROJECT_MUTATION, {
+    onCompleted(data) {
+      setTitle('')
+      setDesc('')
+      setUrl('')
+      prop.closeModal()
+    },
   })
 
+  const handleCreateProject = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+    console.log("handle createproj")
+
+    if (invalidTitle == false) {
+      create_project({
+        variables: {
+          title: title,
+          description: desc,
+          url: Url,
+          category: category,
+          creator_username: session?.user?.name
+        }
+      })
+    }
+  }
+
   let checkState = () => {
-    console.log({title, desc, Url, category});
+    console.log(session?.user?.name)
+    console.log({ title, desc, Url, category });
   }
   return (
     <>
@@ -71,24 +91,10 @@ export default function CreateProjectForm() {
 
 
                     <div>
-                      <div className="col-span-3 sm:col-span-2">
-                        <label htmlFor="title" className="block text-sm font-medium text-gray-700" >
-                          username
-                        </label>
-                        <input
-                          type="text"
-                          name="title"
-                          id="title"
-                          autoComplete="email"
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                          onChange={(e) => handleUsername(e)}
-                          value={username}
-                        />
-                      </div>
 
                       <div className="col-span-3 sm:col-span-2">
-                        <label htmlFor="title" className="block text-sm font-medium text-gray-700" >
-                          Name
+                        <label htmlFor="title" className="block text-lg font-medium text-gray-700" >
+                          Title
                         </label>
                         <input
                           type="text"
@@ -99,11 +105,12 @@ export default function CreateProjectForm() {
                           onChange={(e) => handleTitle(e)}
                           value={title}
                         />
+                        <div className="font-light text-red-500">{invalidTitle ? "Must have a name": ""}</div>
                       </div>
 
 
                       <div className="col-span-3 sm:col-span-2">
-                        <label htmlFor="company-website" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="company-website" className="block text-lg font-medium text-gray-700">
                           Website
                         </label>
                         <div className="mt-1 flex rounded-md shadow-sm">
@@ -125,7 +132,7 @@ export default function CreateProjectForm() {
                   </div>
 
                   <div>
-                    <label htmlFor="about" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="about" className="block text-lg font-medium text-gray-700">
                       About
                     </label>
                     <div className="mt-1">
@@ -134,7 +141,7 @@ export default function CreateProjectForm() {
                         name="about"
                         rows={3}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      
+
                         onChange={(e) => handleDesc(e)}
                         value={desc}
                       />
@@ -144,8 +151,8 @@ export default function CreateProjectForm() {
                     </p>
                   </div>
                   <div className="col-span-2 sm:col-span-3">
-                    <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                      Country
+                    <label htmlFor="country" className="block text-lg font-medium text-gray-700">
+                      Type
                     </label>
                     <select
                       id="country"
@@ -162,12 +169,26 @@ export default function CreateProjectForm() {
 
                 </div>
                 <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                  <button
+                  { createProjectLoading? <button
+                    type="submit"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-white py-2 px-4 text-sm font-medium text-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    onClick={(e) => handleCreateProject(e)}
+                  >
+                    Save
+                  </button> :  <button
                     type="submit"
                     className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     onClick={(e) => handleCreateProject(e)}
                   >
                     Save
+                  </button>
+}
+                  <button
+                    type="button"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    onClick={(e) => CloseForm(e)}
+                  >
+                    Cancel
                   </button>
 
                 </div>

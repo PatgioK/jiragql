@@ -13,7 +13,7 @@ export const NavBar = () => {
     }
     
   return (<>
-    <div className='flex-row'> signed in as {session.user!.email}
+    <div className='flex-row'> signed in as {session.user!.name}
 
     <button onClick={() => signOut()}>Sign Out</button>
     {/* <LoginBtn /> */}</div>

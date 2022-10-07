@@ -20,17 +20,17 @@ const Register = () => {
     // if (loading) return <div>Loading... </div>
     // if (error) return <div>Error: {error.message}</div>
 
-    const handleUsername = (e) => {
+    const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.currentTarget.value);
     }
-    const handlePass1 = (e) => {
+    const handlePass1 = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPass1(e.currentTarget.value);
     }
-    const handlePass2 = (e) => {
+    const handlePass2 = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPass2(e.currentTarget.value);
     }
 
-    const registerCheck = (e) => {
+    const registerCheck = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         console.log('registercheck');
         console.log({ username, pass1, pass2 })
