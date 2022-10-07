@@ -41,7 +41,20 @@ export const resolvers = {
                 description: args.description, 
                 url: args.url, 
                 category: args.category, }})
-        }
+        },
+
+        create_task: async (_parent, args, ctx ) => {
+            const result = await ctx.prisma.task.create({ data: {
+                title: args.title,
+                description: args.description,
+                reporterusername: args.reporterusername,
+                priority: args.priority,
+                status: args.status,
+                issue_type: args.issue_type,
+                assignees: args.assignees,
+                projectId: args.projectId,
+            }})
+        },
     }
 
 };

@@ -15,9 +15,9 @@ export const typeDefs = gql`
         image: String
         # accounts: [Account]
         # sessions: [Session]
-        # created_tasks: [Task]
-        # assigned_tasks: [Task]
-        # comments: [Comment]
+        created_tasks: [Task]
+        assigned_tasks: [Task]
+        comments: [Comment]
         created_projects: [Project]
     }
 
@@ -28,6 +28,7 @@ export const typeDefs = gql`
         description: String
         category: String!
         assigned_users: [User] 
+        creator: User
         creator_username: String!
         tasks: [Task]
     }
@@ -37,6 +38,23 @@ export const typeDefs = gql`
         title: String
         description: String
         reporter: User
+        reporterusername: String
+        priority: String!
+        status: String!
+        issue_type: String!
+        assignees: [User]
+        comments: [Comment]
+        project: Project!
+        projectId: String
+    }
+
+    type Comment {
+        id: String
+        user: User
+        commenterUsername: String
+        task: Task
+        taskId: String
+        comment: String
     }
 
     type Query {
@@ -47,6 +65,7 @@ export const typeDefs = gql`
     type Mutation {
         create_user(username: String!, password: String!): User
         create_project(title: String!, description: String, url: String, category: String!, creator_username: String!): Project
+        create_task(title: String!, description: String, reporterusername: String!, priority: String!, status: String!, issue_type: String!, projectId: String!)
     }
 
     # type UserCreatedResponse{
